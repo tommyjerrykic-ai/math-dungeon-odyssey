@@ -137,6 +137,15 @@ body.portrait #rotate-overlay { display:flex; }
 .toggle-btn { width:110px; background:#38b764; color:#fff; }
 .toggle-btn.off { background:#8b9bb4; }
 #volume-slider { width:300px; height:28px; accent-color:#f4b41b; }
+.setting-copy { display:flex; flex-direction:column; gap:4px; }
+.setting-copy small { color:#8fa5c8; font-size:14px; letter-spacing:1px; }
+.setting-copy small.unlocked { color:#78f0b0; text-shadow:0 0 9px rgba(72,238,165,.55); }
+.password-field-wrap { position:relative; width:310px; }
+#test-password { width:100%; height:48px; padding:8px 48px 8px 15px; font:600 17px inherit; letter-spacing:2px; color:#eaf9ff; background:linear-gradient(180deg,#111833,#182347); border:3px solid #5675a4; outline:none; box-shadow:inset 0 0 12px rgba(0,0,0,.5),3px 3px 0 #101329; }
+#test-password::placeholder { color:#7283a5; letter-spacing:1px; }
+#test-password:focus { border-color:#6edced; box-shadow:inset 0 0 12px rgba(0,0,0,.5),0 0 13px rgba(74,218,239,.38),3px 3px 0 #101329; }
+#test-password.password-valid { border-color:#67df9c; background:linear-gradient(180deg,#102c2b,#173f39); }
+.password-rune { position:absolute; right:14px; top:50%; transform:translateY(-50%); color:#f5ce58; text-shadow:0 0 8px rgba(255,221,90,.7); pointer-events:none; }
 
 /* ═══════════ 遊戲主畫面布局 ═══════════ */
 #game-screen { background:#0d0f1a; }

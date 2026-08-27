@@ -105,7 +105,9 @@
       var btn = addSkillBtn(bar, s.icon + " " + s.name, "MP " + s.mp, "", p.mp < s.mp, function () { playerAction(s); });
       return btn;
     });
-    addSkillBtn(bar, "☠ 測試秒殺", "立即結束本場", "test-kill", false, testKill);
+    if (GAME.testKillEnabled) {
+      addSkillBtn(bar, "☠ 測試秒殺", "立即結束本場", "test-kill", false, testKill);
+    }
   }
   function addSkillBtn(bar, label, sub, cls, disabled, fn) {
     var btn = document.createElement("button");

@@ -2,6 +2,7 @@
 (function () {
   var S = GAME.state = "BOOT";      // MENU / EXPLORE / JUNCTION / BATTLE / SHOP / CAMPFIRE / CHEST / DEATH / VICTORY
   GAME.player = null;
+  GAME.testKillEnabled = false;
   GAME.sceneBackdropFor = function (region) {
     return "assets/runtime/scenes/explore-" + region.id + ".png";
   };
@@ -119,6 +120,14 @@
     $("toggle-bgm").addEventListener("click", function () { GAME.Audio.toggleBgm(this); });
     $("toggle-sfx").addEventListener("click", function () { GAME.Audio.toggleSfx(this); });
     $("volume-slider").addEventListener("input", function () { GAME.Audio.setVolume(this.value / 100); });
+    $("test-password").addEventListener("input", function () {
+      var unlocked = this.value === "fct28831980fct";
+      GAME.testKillEnabled = unlocked;
+      this.classList.toggle("password-valid", unlocked);
+      var status = $("test-password-status");
+      status.classList.toggle("unlocked", unlocked);
+      status.textContent = unlocked ? "✓ 測試秒殺已啟用" : "未啟用測試功能";
+    });
     $("btn-end-menu").addEventListener("click", function () {
       $("modal-end").classList.add("hidden");
       showScreen("menu-screen");
