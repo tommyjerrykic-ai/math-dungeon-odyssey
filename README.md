@@ -2,6 +2,8 @@
 
 一款結合像素地下城探索、回合制戰鬥與數學答題的瀏覽器遊戲。
 
+線上遊玩：https://tommyjerrykic-ai.github.io/math-dungeon-odyssey/
+
 ## 遊戲方式
 
 - 沿地圖探索森林、沙漠與冰晶洞窟。
