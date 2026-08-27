@@ -14,7 +14,8 @@
   window.addEventListener("load", init);
 
   function init() {
-    ["scale-root", "menu-screen", "help-screen", "settings-screen", "game-screen",
+    ["scale-root", "loading-screen", "loading-bar", "loading-percent", "loading-status", "loading-tip",
+     "menu-screen", "help-screen", "settings-screen", "game-screen",
      "rotate-icon", "view3d", "junction-ui", "junc-left", "junc-fwd", "junc-right",
      "location-banner", "battle-log", "enemy-plate", "big-banner", "explore-tip",
      "question-panel", "answer-panel", "question-text", "question-image-wrap", "question-image",
@@ -43,9 +44,7 @@
       document.body.removeEventListener("click", unlock2);
     }, { once: true });
 
-    showScreen("menu-screen");
-    S = GAME.state = "MENU";
-    GAME.Audio.playMusic("menu");
+    beginPreload();
 
     /* 主迴圈 */
     var last = performance.now();
@@ -57,6 +56,45 @@
       requestAnimationFrame(loop);
     }
     requestAnimationFrame(loop);
+  }
+
+  function beginPreload() {
+    var tips = [
+      "✦ 小提示：答對數學題，攻擊才會命中！",
+      "✦ 寶箱偶爾暗藏陷阱，勇者也要小心。",
+      "✦ 營火能恢復血量與法力，別錯過休息機會。",
+      "✦ 不同地區會遇見各自獨特的可愛魔物。"
+    ];
+    var lastTip = -1;
+    showScreen("loading-screen");
+    S = GAME.state = "LOADING";
+    GAME.ASSETS.ensureAIAssets(function (progress) {
+      var percent = Math.max(0, Math.min(100, progress.percent || 0));
+      el["loading-bar"].style.width = percent + "%";
+      el["loading-percent"].textContent = percent + "%";
+      el["loading-status"].textContent = progress.label || "準備冒險⋯";
+      var tipIndex = Math.min(tips.length - 1, Math.floor(percent / 26));
+      if (tipIndex !== lastTip) {
+        lastTip = tipIndex;
+        el["loading-tip"].textContent = tips[tipIndex];
+      }
+    }).then(function () {
+      el["loading-bar"].style.width = "100%";
+      el["loading-percent"].textContent = "100%";
+      el["loading-status"].textContent = GAME.ASSETS.aiLoaded ? "秘境之門已開啟！" : "已使用備用素材開啟秘境";
+      setTimeout(function () {
+        el["loading-screen"].classList.add("loading-complete");
+        setTimeout(function () {
+          showScreen("menu-screen");
+          el["loading-screen"].classList.remove("loading-complete");
+          S = GAME.state = "MENU";
+          GAME.Audio.playMusic("menu");
+        }, 650);
+      }, 450);
+    }).catch(function (err) {
+      console.warn("載入流程採用備用素材：", err);
+      setTimeout(function () { showScreen("menu-screen"); S = GAME.state = "MENU"; }, 300);
+    });
   }
 
   /* ── 縮放適配＋橫豎屏 ── */
@@ -89,7 +127,7 @@
   }
 
   function showScreen(id) {
-    ["menu-screen", "help-screen", "settings-screen", "map-select-screen", "game-screen"].forEach(function (s) {
+    ["loading-screen", "menu-screen", "help-screen", "settings-screen", "map-select-screen", "game-screen"].forEach(function (s) {
       $(s).classList.toggle("hidden", s !== id);
     });
   }
@@ -110,7 +148,7 @@
   /* ═══════════ 開新局 ═══════════ */
   function startRun(regionIdx) {
     var chosenRegion = (typeof regionIdx === "number") ? regionIdx : 0;
-    /* 正式素材在背景載入；玩家可立即用內建像素素材開始冒險。 */
+    /* 正式素材已在進入主選單前完成預載。 */
     var cfg = GAME.CONFIG;
     GAME.player = JSON.parse(JSON.stringify(cfg.player));
     GAME.player.items = JSON.parse(JSON.stringify(cfg.startItems));
@@ -123,8 +161,6 @@
     GAME.UI.updateHud();
     GAME.UI.showExploreMode();
     startRegion(chosenRegion);
-    /* 首個場景已建立後才逐張載入高解析素材，確保按鈕即時回應。 */
-    setTimeout(function () { GAME.ASSETS.ensureAIAssets(); }, 300);
   }
   GAME.startRun = startRun;
 

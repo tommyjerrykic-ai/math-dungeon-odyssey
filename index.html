@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <title>數境迷航</title>
-<link rel="stylesheet" href="css/style.css?v=20260827-runtime1">
+<link rel="stylesheet" href="css/style.css?v=20260827-loader1">
 </head>
 <body>
 
@@ -21,8 +21,35 @@
 <!-- 基準 1280x720，整體縮放適配 -->
 <div id="scale-root">
 
+  <!-- ══════════ 資源載入畫面 ══════════ -->
+  <div id="loading-screen" class="screen loading-screen">
+    <div class="loading-bg"></div>
+    <div class="loading-vignette"></div>
+    <div class="loader-motes" aria-hidden="true">
+      <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+    </div>
+    <div class="loading-card">
+      <div class="loading-emblem" aria-hidden="true">
+        <span class="rune-ring rune-ring-outer"></span>
+        <span class="rune-ring rune-ring-inner"></span>
+        <span class="rune-core">✦</span>
+      </div>
+      <div class="loading-title">數境迷航</div>
+      <div class="loading-subtitle">正在開啟秘境之門</div>
+      <div class="loading-bar-frame">
+        <div id="loading-bar" class="loading-bar"></div>
+        <div class="loading-bar-glint"></div>
+      </div>
+      <div class="loading-progress-row">
+        <span id="loading-status">整理冒險行囊⋯</span>
+        <span id="loading-percent">0%</span>
+      </div>
+      <div id="loading-tip" class="loading-tip">✦ 小提示：答對數學題，攻擊才會命中！</div>
+    </div>
+  </div>
+
   <!-- ══════════ 主菜單 ══════════ -->
-  <div id="menu-screen" class="screen">
+  <div id="menu-screen" class="screen hidden">
     <div class="menu-bg" id="menu-bg"></div>
     <div class="menu-content">
       <div class="game-title">數境迷航</div>
@@ -248,13 +275,13 @@
 
 <script src="data/questions.js"></script>
 <script src="js/config.js?v=20260827-runtime1"></script>
-<script src="js/assets.js?v=20260827-runtime1"></script>
+<script src="js/assets.js?v=20260827-loader1"></script>
 <script src="js/raycaster.js?v=20260727-gearvisual1"></script>
 <script src="js/mapgen.js?v=20260827-startfix1"></script>
 <script src="js/quiz.js?v=20260727-answerconfirm1"></script>
 <script src="js/battle.js?v=20260827-runtime1"></script>
 <script src="js/audio.js?v=20260725-polish3"></script>
   <script src="js/ui.js?v=20260727-answerconfirm1"></script>
-<script src="js/main.js?v=20260827-runtime1"></script>
+<script src="js/main.js?v=20260827-loader1"></script>
 </body>
 </html>

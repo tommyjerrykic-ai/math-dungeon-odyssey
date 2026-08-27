@@ -39,6 +39,39 @@ body.portrait #rotate-overlay { display:flex; }
 .screen { position:absolute; inset:0; }
 .hidden { display:none !important; }
 
+/* ═══════════ 秘境資源載入 ═══════════ */
+.loading-screen { z-index:5000; overflow:hidden; background:#070b20; color:#f7f2d3; opacity:1; transition:opacity .65s ease, filter .65s ease; }
+.loading-screen.loading-complete { opacity:0; filter:brightness(1.8); pointer-events:none; }
+.loading-bg { position:absolute; inset:-24px; background:linear-gradient(rgba(4,7,25,.48),rgba(4,7,25,.82)),url("../assets/runtime/menu-bg.png") center/cover; filter:blur(5px) saturate(.85); transform:scale(1.05); animation:loader-drift 12s ease-in-out infinite alternate; }
+.loading-vignette { position:absolute; inset:0; background:radial-gradient(circle at 50% 45%,rgba(51,171,216,.14),transparent 32%),radial-gradient(ellipse at center,transparent 22%,rgba(2,4,18,.82) 90%); }
+.loading-card { position:absolute; left:50%; top:50%; width:720px; min-height:500px; transform:translate(-50%,-50%); display:flex; flex-direction:column; align-items:center; padding:38px 48px 34px; background:linear-gradient(145deg,rgba(14,23,58,.92),rgba(21,13,50,.94)); border:3px solid #e8ba42; box-shadow:0 0 0 7px rgba(8,16,45,.82),0 0 0 9px rgba(93,210,239,.45),0 22px 70px rgba(0,0,0,.66),inset 0 0 40px rgba(79,120,220,.16); clip-path:polygon(24px 0,calc(100% - 24px) 0,100% 24px,100% calc(100% - 24px),calc(100% - 24px) 100%,24px 100%,0 calc(100% - 24px),0 24px); }
+.loading-card::before,.loading-card::after { content:"✦"; position:absolute; top:18px; color:#65e5f2; font-size:19px; text-shadow:0 0 12px #4ad8ff; }
+.loading-card::before { left:25px; }.loading-card::after { right:25px; }
+.loading-emblem { position:relative; width:170px; height:170px; margin-bottom:14px; }
+.rune-ring { position:absolute; border-radius:50%; inset:0; border:3px solid rgba(102,231,242,.78); box-shadow:0 0 17px rgba(75,218,255,.45),inset 0 0 17px rgba(75,218,255,.25); }
+.rune-ring::before,.rune-ring::after { content:"◆  ✦  ◆  ✦"; position:absolute; left:50%; color:#f5ce58; letter-spacing:5px; white-space:nowrap; text-shadow:0 0 9px rgba(255,210,69,.8); transform:translateX(-50%); }
+.rune-ring::before { top:-10px; }.rune-ring::after { bottom:-10px; transform:translateX(-50%) rotate(180deg); }
+.rune-ring-outer { animation:rune-spin 9s linear infinite; }
+.rune-ring-inner { inset:25px; border-style:dashed; border-color:#e6b93f; animation:rune-spin-back 6s linear infinite; }
+.rune-core { position:absolute; inset:50%; width:70px; height:70px; transform:translate(-50%,-50%) rotate(45deg); display:flex; align-items:center; justify-content:center; color:#fff7b6; font-size:44px; background:linear-gradient(135deg,#1c8da7,#493480); border:3px solid #f2d36a; box-shadow:0 0 28px rgba(64,219,247,.65),inset 0 0 18px rgba(255,255,255,.2); animation:core-pulse 1.8s ease-in-out infinite; }
+.rune-core::first-letter { transform:rotate(-45deg); }
+.loading-title { font-size:58px; font-weight:bold; letter-spacing:13px; color:#ffe875; text-shadow:0 4px 0 #7d451d,0 0 20px rgba(255,220,88,.5); margin-left:13px; }
+.loading-subtitle { margin:7px 0 28px; color:#a9edff; font-size:19px; letter-spacing:6px; text-shadow:0 0 12px rgba(87,220,255,.65); }
+.loading-bar-frame { position:relative; width:610px; height:25px; overflow:hidden; padding:4px; background:#070c21; border:2px solid #92d9e8; box-shadow:0 0 0 3px #26345d,0 0 16px rgba(63,205,239,.3),inset 0 2px 6px #000; }
+.loading-bar { width:0%; height:100%; background:repeating-linear-gradient(90deg,#33bfd2 0,#33bfd2 19px,#51dce2 19px,#51dce2 23px,#e8bd45 23px,#e8bd45 26px); box-shadow:0 0 12px rgba(93,235,255,.75); transition:width .22s ease; }
+.loading-bar-glint { position:absolute; top:4px; bottom:4px; width:90px; left:-100px; background:linear-gradient(90deg,transparent,rgba(255,255,255,.72),transparent); animation:bar-glint 1.45s linear infinite; }
+.loading-progress-row { width:610px; display:flex; justify-content:space-between; margin-top:12px; color:#d9efff; font-size:17px; letter-spacing:2px; }
+#loading-percent { color:#ffe36b; font-weight:bold; min-width:55px; text-align:right; }
+.loading-tip { margin-top:25px; color:#9aaed1; font-size:16px; letter-spacing:1px; animation:tip-glow 2.4s ease-in-out infinite; }
+.loader-motes i { position:absolute; width:5px; height:5px; background:#8cecff; box-shadow:0 0 12px #56ddff; transform:rotate(45deg); animation:mote-rise 5s linear infinite; }
+.loader-motes i:nth-child(1){left:10%;bottom:-4%;animation-delay:-1s}.loader-motes i:nth-child(2){left:20%;bottom:-8%;animation-delay:-3.2s}.loader-motes i:nth-child(3){left:33%;bottom:-5%;animation-delay:-.3s}.loader-motes i:nth-child(4){left:46%;bottom:-10%;animation-delay:-4.1s}.loader-motes i:nth-child(5){left:59%;bottom:-5%;animation-delay:-2.2s}.loader-motes i:nth-child(6){left:72%;bottom:-8%;animation-delay:-.8s}.loader-motes i:nth-child(7){left:84%;bottom:-3%;animation-delay:-3.8s}.loader-motes i:nth-child(8){left:93%;bottom:-7%;animation-delay:-1.7s}
+@keyframes loader-drift { from{transform:scale(1.05) translate3d(-7px,-3px,0)} to{transform:scale(1.09) translate3d(8px,4px,0)} }
+@keyframes rune-spin { to{transform:rotate(360deg)} } @keyframes rune-spin-back { to{transform:rotate(-360deg)} }
+@keyframes core-pulse { 0%,100%{filter:brightness(.9)} 50%{filter:brightness(1.35)} }
+@keyframes bar-glint { to{left:650px} }
+@keyframes tip-glow { 0%,100%{opacity:.7} 50%{opacity:1;color:#cfddf6} }
+@keyframes mote-rise { 0%{transform:translateY(0) rotate(45deg);opacity:0} 15%{opacity:1} 100%{transform:translateY(-760px) rotate(225deg);opacity:0} }
+
 /* ═══════════ 通用像素元件 ═══════════ */
 .pix-btn {
   font-family:inherit;

@@ -528,10 +528,10 @@
   };
 
   /* 載入瀏覽器最佳化後的正式美術素材。 */
-  A.loadAIAssets = function () {
+  A.loadAIAssets = function (onProgress) {
     var base = "assets/runtime/textures/";
     var spriteBase = "assets/runtime/idle/";
-    var spriteVersion = "?v=20260827-runtime1";
+    var spriteVersion = "?v=20260827-loader1";
     var textureFiles = {
       forestA: "forest_a.png", forestB: "forest_b.png",
       desertA: "desert_a.png", desertB: "desert_b.png",
@@ -553,26 +553,53 @@
       crystalcrab: "crystalcrab-attack.png", iceimp: "iceimp-attack.png", frostwisp: "frostwisp-attack.png", knight: "knight-attack.png",
       treant: "treant-attack.png", sandworm: "sandworm-attack.png", demonlord: "demonlord-attack.png"
     };
-    /* 逐張載入，避免同時解碼數十張高解析圖片而凍結主選單。 */
-    var chain = Promise.resolve(), failed = false;
-    function queue(factory) {
-      chain = chain.then(factory).catch(function (err) {
-        failed = true;
-        console.warn(err.message);
+    var tasks = [], failed = false;
+    function addTask(label, factory) { tasks.push({ label: label, run: factory }); }
+    function preloadImage(src) {
+      return new Promise(function (resolve, reject) {
+        var im = new Image(), timer = setTimeout(function () { reject(new Error("素材載入逾時：" + src)); }, 12000);
+        im.onload = function () { clearTimeout(timer); resolve(im); };
+        im.onerror = function () { clearTimeout(timer); reject(new Error("素材載入失敗：" + src)); };
+        im.src = src;
       });
     }
     Object.keys(textureFiles).forEach(function (name) {
-      queue(function () { return A.registerImage(name, base + textureFiles[name], 64, 64).then(function (img) {
+      addTask("雕刻地城牆面⋯", function () { return A.registerImage(name, base + textureFiles[name] + spriteVersion, 64, 64).then(function (img) {
         A.textures[name] = img;
       }); });
     });
     Object.keys(spriteFiles).forEach(function (name) {
-      queue(function () { return A.registerImage(name, spriteBase + spriteFiles[name] + spriteVersion, 192, 192, null, true); });
+      addTask("召喚怪物與旅人⋯", function () { return A.registerImage(name, spriteBase + spriteFiles[name] + spriteVersion, 192, 192, null, true); });
     });
     Object.keys(attackSpriteFiles).forEach(function (name) {
-      queue(function () { return A.registerImage(name + "_attack", "assets/runtime/attack/" + attackSpriteFiles[name] + spriteVersion, 192, 192, null, true); });
+      addTask("準備怪物戰鬥動作⋯", function () { return A.registerImage(name + "_attack", "assets/runtime/attack/" + attackSpriteFiles[name] + spriteVersion, 192, 192, null, true); });
     });
-    return chain.then(function () {
+    [
+      "assets/runtime/menu-bg.png", "assets/runtime/scenes/explore-forest.png", "assets/runtime/scenes/explore-desert.png",
+      "assets/runtime/scenes/explore-cave.png", "assets/runtime/scenes/battle-arena.png", "assets/runtime/scenes/boss-arena.png",
+      "assets/runtime/floors/floor-forest.png", "assets/runtime/floors/floor-desert.png", "assets/runtime/floors/floor-cave.png",
+      "assets/runtime/floors/floor-stone.png", "assets/generated/hero-adventurer.png", "assets/generated/ui-rune-divider.png",
+      "assets/generated/items/potion-s.png", "assets/generated/items/potion-l.png", "assets/generated/items/lifedrain.png",
+      "assets/generated/items/ether.png", "assets/generated/items/def-tonic.png", "assets/generated/items/atk-tonic.png"
+    ].forEach(function (src) {
+      addTask("鋪設場景與冒險道具⋯", function () { return preloadImage(src + spriteVersion); });
+    });
+    var next = 0, done = 0;
+    function worker() {
+      if (next >= tasks.length) return Promise.resolve();
+      var task = tasks[next++];
+      return task.run().catch(function (err) {
+        failed = true;
+        console.warn(err.message);
+      }).then(function () {
+        done++;
+        if (onProgress) onProgress({ done: done, total: tasks.length, percent: Math.round(done * 100 / tasks.length), label: task.label, failed: failed });
+      }).then(worker);
+    }
+    if (onProgress) onProgress({ done: 0, total: tasks.length, percent: 0, label: "整理冒險行囊⋯", failed: false });
+    var workers = [];
+    for (var wi = 0; wi < Math.min(4, tasks.length); wi++) workers.push(worker());
+    return Promise.all(workers).then(function () {
       A.aiLoaded = !failed;
       A.aiReadyDone = true;
       return A;
@@ -580,8 +607,9 @@
   };
   A.aiReady = null;
   A.aiReadyDone = false;
-  A.ensureAIAssets = function () {
-    if (!A.aiReady) A.aiReady = A.loadAIAssets();
+  A.ensureAIAssets = function (onProgress) {
+    if (!A.aiReady) A.aiReady = A.loadAIAssets(onProgress);
+    else if (A.aiReadyDone && onProgress) onProgress({ done: 1, total: 1, percent: 100, label: "秘境之門已開啟！", failed: !A.aiLoaded });
     return A.aiReady;
   };
 
