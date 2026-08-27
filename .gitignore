@@ -1,0 +1,19 @@
+# Local development and source artwork
+.tmp-*
+.tmp-imagegen/
+.workbuddy/
+tmp/
+tools/
+server.log
+
+# Design references not required by the web build
+*.docx
+UI計劃.png
+主界面計劃.png
+
+# Original heavy images replaced by assets/runtime versions
+assets/generated/battle-arena.png
+assets/generated/boss-arena.png
+assets/generated/explore-*.png
+assets/generated/floor-*.png
+assets/generated/menu-bg.png

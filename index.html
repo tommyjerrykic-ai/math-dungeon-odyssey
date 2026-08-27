@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>數境迷航</title>
+<link rel="stylesheet" href="css/style.css?v=20260827-runtime1">
+</head>
+<body>
+
+<!-- 豎屏遮罩：請旋轉裝置 -->
+<div id="rotate-overlay">
+  <div class="rotate-box">
+    <canvas id="rotate-icon" width="96" height="96"></canvas>
+    <div class="rotate-text">請旋轉裝置</div>
+    <div class="rotate-sub">《數境迷航》需要橫屏遊玩</div>
+  </div>
+</div>
+
+<!-- 基準 1280x720，整體縮放適配 -->
+<div id="scale-root">
+
+  <!-- ══════════ 主菜單 ══════════ -->
+  <div id="menu-screen" class="screen">
+    <div class="menu-bg" id="menu-bg"></div>
+    <div class="menu-content">
+      <div class="game-title">數境迷航</div>
+      <div class="game-subtitle">Math Dungeon Odyssey</div>
+      <div class="menu-buttons">
+        <button class="pix-btn menu-btn" id="btn-start">開始遊戲</button>
+        <button class="pix-btn menu-btn" id="btn-map-select">選擇地圖</button>
+        <button class="pix-btn menu-btn" id="btn-help">遊戲說明</button>
+        <button class="pix-btn menu-btn" id="btn-settings">設定</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ 遊戲說明 ══════════ -->
+  <div id="help-screen" class="screen hidden">
+    <div class="panel-page">
+      <div class="panel-title">遊戲說明</div>
+      <div class="panel-body" id="help-body">
+        <p>☀ 你是一名小勇者，在像素秘境中不斷向前冒險。</p>
+        <p>⚔ 遇到怪物時會進入<b>回合制戰鬥</b>：選擇「攻擊」或「法術」後，<b>答對數學題才會命中</b>，答錯就會落空！</p>
+        <p>✎ 題目有三種：填充題（用數字鍵盤輸入答案）、選擇題（點 A/B/C/D）、看圖選擇題（看右上方的圖作答）。</p>
+        <p>♦ 路上會出現<b>分叉路</b>：點選左 / 前 / 右決定方向。路口的圖示告訴你前方是什麼——⚔怪物、💰商店、🔥營火、🎁寶箱。</p>
+        <p>🔥 營火可以回滿血量與法力；💰商店用打怪賺來的金幣買藥水與裝備。</p>
+        <p>👑 每個地區的盡頭都有一隻王。打敗王就能前往下一個地區，共有三個地區！</p>
+        <p>💀 血量歸零就會倒下，冒險重新開始……加油，數學勇者！</p>
+      </div>
+      <button class="pix-btn" id="btn-help-back">返回</button>
+    </div>
+  </div>
+
+  <!-- ══════════ 設定 ══════════ -->
+  <div id="settings-screen" class="screen hidden">
+    <div class="panel-page">
+      <div class="panel-title">設定</div>
+      <div class="panel-body">
+        <div class="setting-row">
+          <span>背景音樂</span>
+          <button class="pix-btn toggle-btn off" id="toggle-bgm">關</button>
+        </div>
+        <div class="setting-row">
+          <span>音效</span>
+          <button class="pix-btn toggle-btn" id="toggle-sfx">開</button>
+        </div>
+        <div class="setting-row">
+          <span>音量</span>
+          <input type="range" id="volume-slider" min="0" max="100" value="70">
+        </div>
+      </div>
+      <button class="pix-btn" id="btn-settings-back">返回</button>
+    </div>
+  </div>
+
+  <!-- ══════════ 地圖選擇 ══════════ -->
+  <div id="map-select-screen" class="screen hidden">
+    <div class="menu-bg"></div>
+    <div class="map-select-content">
+      <div class="map-select-title">選擇冒險地圖</div>
+      <div class="map-select-subtitle">可直接從任一地區開始冒險</div>
+      <div class="map-select-list" id="map-select-list"></div>
+      <button class="pix-btn map-select-back" id="btn-map-select-back">返回主選單</button>
+    </div>
+  </div>
+
+  <!-- ══════════ 遊戲主畫面 ══════════ -->
+  <div id="game-screen" class="screen hidden">
+
+    <!-- 左：第一人稱視野 -->
+    <div id="view-panel">
+      <canvas id="view3d" width="400" height="312"></canvas>
+
+      <!-- 右上浮動數值 -->
+      <div id="stats-hud">
+        <div id="hero-chip">
+          <span class="hero-sigil">✦</span>
+          <span class="hero-copy"><b id="hero-title">見習探險者</b><small id="hero-class">數境旅人</small></span>
+        </div>
+        <div class="hud-row"><span class="hud-label">血量</span><div class="hud-bar"><div class="hud-fill hp" id="bar-hp"></div><span class="hud-num" id="num-hp"></span></div></div>
+        <div class="hud-row"><span class="hud-label">法力</span><div class="hud-bar"><div class="hud-fill mp" id="bar-mp"></div><span class="hud-num" id="num-mp"></span></div></div>
+        <div class="hud-row"><span class="hud-label">經驗</span><div class="hud-bar"><div class="hud-fill xp" id="bar-xp"></div><span class="hud-num" id="num-xp"></span></div></div>
+        <div class="hud-row"><span class="hud-label">金幣</span><span class="hud-gold" id="num-gold">0</span></div>
+      </div>
+
+      <!-- 地區/層數橫幅 -->
+      <div id="location-banner"></div>
+
+      <!-- 戰鬥中的敵人名牌 -->
+      <div id="enemy-plate" class="hidden">
+        <span id="enemy-name"></span>
+        <div class="hud-bar enemy"><div class="hud-fill ehp" id="bar-enemy"></div><span class="hud-num" id="num-enemy"></span></div>
+      </div>
+
+      <!-- 戰鬥訊息 -->
+      <div id="battle-log" class="hidden"></div>
+
+      <!-- 事件登場提示 -->
+      <div id="event-intro" class="hidden"><span id="event-intro-mark">✦</span><div><b id="event-intro-title"></b><small id="event-intro-copy"></small></div></div>
+
+      <!-- 左下功能按鈕 -->
+      <div id="action-bar">
+        <button class="pix-btn act-btn" id="btn-items">物品欄</button>
+        <button class="pix-btn act-btn" id="btn-skills">技能欄</button>
+        <button class="pix-btn act-btn" id="btn-stats">能力欄</button>
+      </div>
+
+      <!-- 岔路選擇 -->
+      <div id="junction-ui" class="hidden">
+        <div class="junction-tip">選擇方向</div>
+        <div class="junction-btns">
+          <button class="pix-btn junc-btn" id="junc-left">← 左</button>
+          <button class="pix-btn junc-btn" id="junc-fwd">↑ 前</button>
+          <button class="pix-btn junc-btn" id="junc-right">右 →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 右：題目 + 作答 -->
+    <div id="side-panel">
+      <div id="side-map-panel" class="hidden">
+        <div class="side-map-title">探索地圖</div>
+        <div class="side-map-legend">白框＝你的位置　發亮箭頭＝目前可選路線</div>
+        <canvas id="side-map-canvas" width="330" height="460"></canvas>
+        <div id="side-map-hint">向前走著……</div>
+        <div id="side-map-story"></div>
+      </div>
+      <div id="question-panel">
+        <div id="question-text">冒險即將開始……</div>
+        <div id="question-image-wrap" class="hidden"><img id="question-image" alt="題目附圖"></div>
+      </div>
+      <div id="answer-panel">
+        <!-- 數字鍵盤（填充題） -->
+        <div id="numpad" class="hidden">
+          <div id="numpad-display"><span id="numpad-entry"></span><span class="numpad-cursor">▌</span></div>
+          <div class="numpad-grid">
+            <button class="pix-btn num-btn" data-k="1">1</button>
+            <button class="pix-btn num-btn" data-k="2">2</button>
+            <button class="pix-btn num-btn" data-k="3">3</button>
+            <button class="pix-btn num-btn" data-k="4">4</button>
+            <button class="pix-btn num-btn" data-k="5">5</button>
+            <button class="pix-btn num-btn" data-k="6">6</button>
+            <button class="pix-btn num-btn" data-k="7">7</button>
+            <button class="pix-btn num-btn" data-k="8">8</button>
+            <button class="pix-btn num-btn" data-k="9">9</button>
+            <button class="pix-btn num-btn" data-k=".">.</button>
+            <button class="pix-btn num-btn" data-k="0">0</button>
+            <button class="pix-btn num-btn" data-k="-">−</button>
+            <button class="pix-btn num-btn wide" data-k="back">⌫</button>
+            <button class="pix-btn num-btn wide ok" data-k="ok">確定</button>
+          </div>
+        </div>
+        <!-- ABCD 選項（選擇題） -->
+        <div id="choices" class="hidden">
+          <button class="pix-btn choice-btn" data-i="0">A</button>
+          <button class="pix-btn choice-btn" data-i="1">B</button>
+          <button class="pix-btn choice-btn" data-i="2">C</button>
+          <button class="pix-btn choice-btn" data-i="3">D</button>
+        </div>
+        <!-- 技能欄（戰鬥時的出手選擇） -->
+        <div id="skill-bar" class="hidden"></div>
+        <!-- 探索時的提示 -->
+        <div id="explore-tip">向前走著……</div>
+      </div>
+    </div>
+
+    <!-- ══ 彈窗們 ══ -->
+    <div class="modal hidden" id="modal-items">
+      <div class="modal-box inventory-modal">
+        <div class="modal-title">物品欄</div>
+        <div class="modal-body inventory-body">
+          <div class="inventory-left">
+            <div class="inventory-grid" id="items-list"></div>
+            <div class="inventory-detail" id="item-detail"></div>
+          </div>
+          <div class="inventory-gear" id="inventory-gear"></div>
+        </div>
+        <button class="pix-btn modal-close" data-close="modal-items">關閉</button>
+      </div>
+    </div>
+
+    <div class="modal hidden" id="modal-skills">
+      <div class="modal-box">
+        <div class="modal-title">技能欄</div>
+        <div class="modal-body" id="skills-list"></div>
+        <button class="pix-btn modal-close" data-close="modal-skills">關閉</button>
+      </div>
+    </div>
+
+    <div class="modal hidden" id="modal-stats">
+      <div class="modal-box">
+        <div class="modal-title">能力欄</div>
+        <div class="modal-body" id="stats-list"></div>
+        <button class="pix-btn modal-close" data-close="modal-stats">關閉</button>
+      </div>
+    </div>
+
+    <div class="modal hidden" id="modal-shop">
+      <div class="modal-box">
+        <div class="modal-title" id="shop-title">旅行商人</div>
+        <div class="modal-body" id="shop-list"></div>
+        <div class="shop-actions" id="shop-actions"></div>
+      </div>
+    </div>
+
+    <!-- 解析/回饋 toast -->
+    <div id="feedback-toast" class="hidden">
+      <div id="feedback-title"></div>
+      <div id="feedback-body"></div>
+    </div>
+
+    <!-- 大橫幅（升級/地區/Boss） -->
+    <div id="big-banner" class="hidden"></div>
+
+    <!-- 死亡/通關結算 -->
+    <div class="modal hidden" id="modal-end">
+      <div class="modal-box">
+        <div class="modal-title" id="end-title"></div>
+        <div class="modal-body" id="end-body"></div>
+        <button class="pix-btn" id="btn-end-menu">回主菜單</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="data/questions.js"></script>
+<script src="js/config.js?v=20260827-runtime1"></script>
+<script src="js/assets.js?v=20260827-runtime1"></script>
+<script src="js/raycaster.js?v=20260727-gearvisual1"></script>
+<script src="js/mapgen.js?v=20260827-startfix1"></script>
+<script src="js/quiz.js?v=20260727-answerconfirm1"></script>
+<script src="js/battle.js?v=20260827-runtime1"></script>
+<script src="js/audio.js?v=20260725-polish3"></script>
+  <script src="js/ui.js?v=20260727-answerconfirm1"></script>
+<script src="js/main.js?v=20260827-runtime1"></script>
+</body>
+</html>
