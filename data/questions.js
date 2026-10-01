@@ -542,5 +542,152 @@ var QUESTION_BANK = [
       { t: "arcLabel", p: [245, 148], s: "?" }
     ] },
     options: ["3", "6", "12", "無法確定"], answer: 1,
-    explanation: "全等三角形的對應邊相等，AB 對應 DE，所以 DE＝6。" }
+    explanation: "全等三角形的對應邊相等，AB 對應 DE，所以 DE＝6。" },
+
+  /* ─────── 對應邊與對應角：5 題 ─────── */
+  { id: "img010", type: "img_mcq", difficulty: 2, tags: ["八年級第十二章", "對應邊"], regions: [],
+    question: "如圖，△ABC≌△DEF，AB 的對應邊是哪一條？（　　）",
+    image: { fig: true, w: 340, h: 210, items: [
+      { t: "seg", p: [[30, 170], [130, 170]] }, { t: "seg", p: [[30, 170], [70, 60]] }, { t: "seg", p: [[70, 60], [130, 170]] },
+      { t: "seg", p: [[310, 170], [210, 170]] }, { t: "seg", p: [[310, 170], [270, 60]] }, { t: "seg", p: [[270, 60], [210, 170]] },
+      { t: "label", p: [17, 187], s: "A" }, { t: "label", p: [142, 187], s: "B" }, { t: "label", p: [70, 42], s: "C" },
+      { t: "label", p: [323, 187], s: "D" }, { t: "label", p: [198, 187], s: "E" }, { t: "label", p: [270, 42], s: "F" }
+    ] },
+    options: ["DE", "DF", "EF", "BC"], answer: 0,
+    explanation: "全等式按順序對應：A↔D、B↔E，所以 AB 對應 DE。" },
+  { id: "img011", type: "img_mcq", difficulty: 2, tags: ["八年級第十二章", "對應角"], regions: [],
+    question: "如圖，△PQR≌△XYZ，∠Q 的對應角是哪一個？（　　）",
+    image: { fig: true, w: 340, h: 210, items: [
+      { t: "seg", p: [[35, 170], [145, 170]] }, { t: "seg", p: [[35, 170], [35, 65]] }, { t: "seg", p: [[35, 65], [145, 170]] },
+      { t: "seg", p: [[305, 170], [195, 170]] }, { t: "seg", p: [[305, 170], [305, 65]] }, { t: "seg", p: [[305, 65], [195, 170]] },
+      { t: "label", p: [21, 187], s: "P" }, { t: "label", p: [158, 187], s: "Q" }, { t: "label", p: [35, 47], s: "R" },
+      { t: "label", p: [319, 187], s: "X" }, { t: "label", p: [182, 187], s: "Y" }, { t: "label", p: [305, 47], s: "Z" }
+    ] },
+    options: ["∠X", "∠Y", "∠Z", "∠R"], answer: 1,
+    explanation: "△PQR≌△XYZ 的頂點依次對應，Q 對應 Y。" },
+  { id: "img012", type: "img_mcq", difficulty: 2, tags: ["八年級第十二章", "對應邊"], regions: [],
+    question: "如圖，△ABC≌△FDE，BC 的對應邊是哪一條？（　　）",
+    image: { fig: true, w: 340, h: 210, items: [
+      { t: "seg", p: [[30, 170], [130, 170]] }, { t: "seg", p: [[30, 170], [70, 60]] }, { t: "seg", p: [[70, 60], [130, 170]] },
+      { t: "seg", p: [[310, 170], [210, 170]] }, { t: "seg", p: [[310, 170], [270, 60]] }, { t: "seg", p: [[270, 60], [210, 170]] },
+      { t: "label", p: [17, 187], s: "A" }, { t: "label", p: [142, 187], s: "B" }, { t: "label", p: [70, 42], s: "C" },
+      { t: "label", p: [323, 187], s: "F" }, { t: "label", p: [198, 187], s: "D" }, { t: "label", p: [270, 42], s: "E" }
+    ] },
+    options: ["FD", "FE", "DE", "AC"], answer: 2,
+    explanation: "△ABC≌△FDE 中，B 對應 D、C 對應 E，所以 BC 對應 DE。" },
+  { id: "img013", type: "img_mcq", difficulty: 2, tags: ["八年級第十二章", "對應角"], regions: [],
+    question: "如圖，△LMN≌△PQR，∠N 的對應角是哪一個？（　　）",
+    image: { fig: true, w: 350, h: 210, items: [
+      { t: "seg", p: [[45, 160], [135, 160]] }, { t: "seg", p: [[45, 160], [45, 70]] }, { t: "seg", p: [[45, 70], [135, 160]] },
+      { t: "seg", p: [[245, 65], [245, 155]] }, { t: "seg", p: [[245, 65], [335, 65]] }, { t: "seg", p: [[335, 65], [245, 155]] },
+      { t: "label", p: [31, 177], s: "L" }, { t: "label", p: [148, 177], s: "M" }, { t: "label", p: [45, 52], s: "N" },
+      { t: "label", p: [230, 49], s: "P" }, { t: "label", p: [245, 174], s: "Q" }, { t: "label", p: [339, 47], s: "R" }
+    ] },
+    options: ["∠P", "∠Q", "∠R", "∠M"], answer: 2,
+    explanation: "△LMN≌△PQR 中，第三個頂點 N 對應第三個頂點 R。" },
+  { id: "img014", type: "img_mcq", difficulty: 2, tags: ["八年級第十二章", "對應邊"], regions: [],
+    question: "如圖，△RST≌△UVW，RT 的對應邊是哪一條？（　　）",
+    image: { fig: true, w: 340, h: 210, items: [
+      { t: "seg", p: [[35, 175], [145, 175]] }, { t: "seg", p: [[35, 175], [85, 65]] }, { t: "seg", p: [[85, 65], [145, 175]] },
+      { t: "seg", p: [[305, 175], [195, 175]] }, { t: "seg", p: [[305, 175], [255, 65]] }, { t: "seg", p: [[255, 65], [195, 175]] },
+      { t: "label", p: [21, 191], s: "R" }, { t: "label", p: [145, 197], s: "S" }, { t: "label", p: [85, 47], s: "T" },
+      { t: "label", p: [319, 191], s: "U" }, { t: "label", p: [195, 197], s: "V" }, { t: "label", p: [255, 47], s: "W" }
+    ] },
+    options: ["UV", "VW", "UW", "ST"], answer: 2,
+    explanation: "R 對應 U、T 對應 W，因此 RT 對應 UW。" },
+
+  /* ─────── 看圖辨認全等判定：7 題 ─────── */
+  { id: "img015", type: "img_mcq", difficulty: 2, tags: ["八年級第十二章", "SSS"], regions: [],
+    question: "如圖，兩個三角形的三組對應邊分別相等，應用哪個條件判定全等？（　　）",
+    image: { fig: true, w: 350, h: 220, items: [
+      { t: "seg", p: [[35, 180], [155, 180]] }, { t: "seg", p: [[35, 180], [35, 90]] }, { t: "seg", p: [[35, 90], [155, 180]] },
+      { t: "seg", p: [[315, 180], [195, 180]] }, { t: "seg", p: [[315, 180], [315, 90]] }, { t: "seg", p: [[315, 90], [195, 180]] },
+      { t: "label", p: [22, 198], s: "A" }, { t: "label", p: [155, 205], s: "B" }, { t: "label", p: [35, 72], s: "C" },
+      { t: "label", p: [328, 198], s: "D" }, { t: "label", p: [195, 205], s: "E" }, { t: "label", p: [315, 72], s: "F" },
+      { t: "arcLabel", p: [95, 163], s: "4" }, { t: "arcLabel", p: [255, 163], s: "4" },
+      { t: "arcLabel", p: [50, 135], s: "3" }, { t: "arcLabel", p: [300, 135], s: "3" },
+      { t: "arcLabel", p: [110, 121], s: "5" }, { t: "arcLabel", p: [240, 121], s: "5" }
+    ] },
+    options: ["SSS", "SAS", "ASA", "AAA"], answer: 0,
+    explanation: "三組對應邊分別相等，可用邊邊邊（SSS）判定全等。" },
+  { id: "img016", type: "img_mcq", difficulty: 2, tags: ["八年級第十二章", "SAS"], regions: [],
+    question: "如圖，AB＝DE、AC＝DF、∠A＝∠D，應用哪個條件判定全等？（　　）",
+    image: { fig: true, w: 340, h: 210, items: [
+      { t: "seg", p: [[30, 175], [140, 175]] }, { t: "seg", p: [[30, 175], [85, 65]] }, { t: "seg", p: [[85, 65], [140, 175]] },
+      { t: "seg", p: [[310, 175], [200, 175]] }, { t: "seg", p: [[310, 175], [255, 65]] }, { t: "seg", p: [[255, 65], [200, 175]] },
+      { t: "label", p: [18, 192], s: "A" }, { t: "label", p: [151, 192], s: "B" }, { t: "label", p: [85, 47], s: "C" },
+      { t: "label", p: [322, 192], s: "D" }, { t: "label", p: [188, 192], s: "E" }, { t: "label", p: [255, 47], s: "F" },
+      { t: "arcLabel", p: [85, 158], s: "5" }, { t: "arcLabel", p: [255, 158], s: "5" },
+      { t: "arcLabel", p: [58, 111], s: "6" }, { t: "arcLabel", p: [282, 111], s: "6" },
+      { t: "arcLabel", p: [55, 145], s: "a" }, { t: "arcLabel", p: [285, 145], s: "a" }
+    ] },
+    options: ["SAS", "SSA", "ASA", "SSS"], answer: 0,
+    explanation: "兩邊 AB、AC 和它們的夾角 ∠A 分別對應相等，可用 SAS。" },
+  { id: "img017", type: "img_mcq", difficulty: 2, tags: ["八年級第十二章", "ASA"], regions: [],
+    question: "如圖，∠A＝∠D、AB＝DE、∠B＝∠E，應用哪個條件判定全等？（　　）",
+    image: { fig: true, w: 340, h: 210, items: [
+      { t: "seg", p: [[30, 175], [140, 175]] }, { t: "seg", p: [[30, 175], [80, 65]] }, { t: "seg", p: [[80, 65], [140, 175]] },
+      { t: "seg", p: [[310, 175], [200, 175]] }, { t: "seg", p: [[310, 175], [260, 65]] }, { t: "seg", p: [[260, 65], [200, 175]] },
+      { t: "label", p: [18, 192], s: "A" }, { t: "label", p: [152, 192], s: "B" }, { t: "label", p: [80, 47], s: "C" },
+      { t: "label", p: [322, 192], s: "D" }, { t: "label", p: [188, 192], s: "E" }, { t: "label", p: [260, 47], s: "F" },
+      { t: "arcLabel", p: [54, 145], s: "a" }, { t: "arcLabel", p: [116, 145], s: "b" },
+      { t: "arcLabel", p: [286, 145], s: "a" }, { t: "arcLabel", p: [224, 145], s: "b" },
+      { t: "arcLabel", p: [85, 163], s: "8" }, { t: "arcLabel", p: [255, 163], s: "8" }
+    ] },
+    options: ["ASA", "AAS", "SAS", "AAA"], answer: 0,
+    explanation: "兩個角及它們之間的邊分別相等，屬於角邊角（ASA）。" },
+  { id: "img018", type: "img_mcq", difficulty: 2, tags: ["八年級第十二章", "AAS"], regions: [],
+    question: "如圖，∠A＝∠D、∠C＝∠F、AB＝DE，應用哪個條件判定全等？（　　）",
+    image: { fig: true, w: 340, h: 210, items: [
+      { t: "seg", p: [[30, 175], [140, 175]] }, { t: "seg", p: [[30, 175], [80, 65]] }, { t: "seg", p: [[80, 65], [140, 175]] },
+      { t: "seg", p: [[310, 175], [200, 175]] }, { t: "seg", p: [[310, 175], [260, 65]] }, { t: "seg", p: [[260, 65], [200, 175]] },
+      { t: "label", p: [18, 192], s: "A" }, { t: "label", p: [152, 192], s: "B" }, { t: "label", p: [80, 47], s: "C" },
+      { t: "label", p: [322, 192], s: "D" }, { t: "label", p: [188, 192], s: "E" }, { t: "label", p: [260, 47], s: "F" },
+      { t: "arcLabel", p: [54, 145], s: "a" }, { t: "arcLabel", p: [80, 100], s: "b" },
+      { t: "arcLabel", p: [286, 145], s: "a" }, { t: "arcLabel", p: [260, 100], s: "b" },
+      { t: "arcLabel", p: [85, 163], s: "8" }, { t: "arcLabel", p: [255, 163], s: "8" }
+    ] },
+    options: ["ASA", "AAS", "SAS", "SSA"], answer: 1,
+    explanation: "已知兩角及其中一角的對邊，AB 並非 ∠A 與 ∠C 的夾邊，因此是 AAS。" },
+  { id: "img019", type: "img_mcq", difficulty: 2, tags: ["八年級第十二章", "HL"], regions: [],
+    question: "如圖，兩個直角三角形的斜邊都是 5，一條直角邊都是 4，用哪個條件判定全等？（　　）",
+    image: { fig: true, w: 350, h: 220, items: [
+      { t: "seg", p: [[35, 180], [155, 180]] }, { t: "seg", p: [[35, 180], [35, 90]] }, { t: "seg", p: [[35, 90], [155, 180]] },
+      { t: "seg", p: [[315, 180], [195, 180]] }, { t: "seg", p: [[315, 180], [315, 90]] }, { t: "seg", p: [[315, 90], [195, 180]] },
+      { t: "seg", p: [[35, 166], [49, 166]] }, { t: "seg", p: [[49, 166], [49, 180]] },
+      { t: "seg", p: [[315, 166], [301, 166]] }, { t: "seg", p: [[301, 166], [301, 180]] },
+      { t: "label", p: [22, 198], s: "A" }, { t: "label", p: [155, 205], s: "B" }, { t: "label", p: [35, 72], s: "C" },
+      { t: "label", p: [328, 198], s: "D" }, { t: "label", p: [195, 205], s: "E" }, { t: "label", p: [315, 72], s: "F" },
+      { t: "arcLabel", p: [95, 163], s: "4" }, { t: "arcLabel", p: [255, 163], s: "4" },
+      { t: "arcLabel", p: [110, 121], s: "5" }, { t: "arcLabel", p: [240, 121], s: "5" }
+    ] },
+    options: ["HL", "SSA", "AAA", "ASA"], answer: 0,
+    explanation: "只對直角三角形適用：斜邊和一條直角邊分別相等，可用 HL。" },
+  { id: "img020", type: "img_mcq", difficulty: 2, tags: ["八年級第十二章", "公共邊與SAS"], regions: [],
+    question: "如圖，AB＝AD、∠BAC＝∠CAD，且 AC 是公共邊，應用哪個條件證 △ABC≌△ADC？（　　）",
+    image: { fig: true, w: 340, h: 230, items: [
+      { t: "seg", p: [[170, 35], [75, 110]] }, { t: "seg", p: [[75, 110], [170, 185]] },
+      { t: "seg", p: [[170, 185], [265, 110]] }, { t: "seg", p: [[265, 110], [170, 35]] },
+      { t: "seg", p: [[170, 35], [170, 185]] },
+      { t: "seg", p: [[117, 66], [128, 79]] }, { t: "seg", p: [[223, 66], [212, 79]] },
+      { t: "label", p: [170, 17], s: "A" }, { t: "label", p: [58, 110], s: "B" },
+      { t: "label", p: [170, 205], s: "C" }, { t: "label", p: [282, 110], s: "D" },
+      { t: "arcLabel", p: [144, 71], s: "a" }, { t: "arcLabel", p: [196, 71], s: "a" }
+    ] },
+    options: ["SAS", "SSS", "ASA", "AAS"], answer: 0,
+    explanation: "AB＝AD、AC＝AC，且夾角 ∠BAC＝∠CAD，所以用 SAS。" },
+  { id: "img021", type: "img_mcq", difficulty: 2, tags: ["八年級第十二章", "SSA不能判定"], regions: [],
+    question: "如圖，僅知 AB＝DE、AC＝DF、∠B＝∠E。只靠這些條件能否證全等？（　　）",
+    image: { fig: true, w: 340, h: 210, items: [
+      { t: "seg", p: [[30, 175], [140, 175]] }, { t: "seg", p: [[30, 175], [65, 100]] }, { t: "seg", p: [[65, 100], [140, 175]] },
+      { t: "seg", p: [[310, 175], [200, 175]] }, { t: "seg", p: [[310, 175], [235, 140]] }, { t: "seg", p: [[235, 140], [200, 175]] },
+      { t: "label", p: [18, 192], s: "A" }, { t: "label", p: [152, 192], s: "B" }, { t: "label", p: [65, 82], s: "C" },
+      { t: "label", p: [322, 192], s: "D" }, { t: "label", p: [188, 192], s: "E" }, { t: "label", p: [235, 122], s: "F" },
+      { t: "seg", p: [[85, 168], [85, 182]] }, { t: "seg", p: [[255, 168], [255, 182]] },
+      { t: "seg", p: [[39, 133], [52, 139]] }, { t: "seg", p: [[44, 122], [57, 128]] },
+      { t: "seg", p: [[269, 147], [274, 134]] }, { t: "seg", p: [[280, 152], [285, 139]] },
+      { t: "arcLabel", p: [120, 164], s: "b" }, { t: "arcLabel", p: [220, 164], s: "b" }
+    ] },
+    options: ["SSS", "SAS", "ASA", "不能確定，SSA 不足以判定"], answer: 3,
+    explanation: "已知的是兩邊及非夾角（SSA），一般不能據此判定兩三角形全等。圖形只作示意。" }
 ];
