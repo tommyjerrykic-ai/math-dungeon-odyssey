@@ -112,7 +112,7 @@
   UI.showSkillBar = function () { showBattlePanels(); hideAllAnswer(); clearQuestion(); el["skill-bar"].classList.remove("hidden"); };
 
   UI.setQuestion = function (text, imageDataUrl) {
-    el["question-text"].textContent = text;
+    el["question-text"].innerHTML = GAME.MathText.toHTML(text);
     if (imageDataUrl) {
       el["question-image"].src = imageDataUrl;
       el["question-image-wrap"].classList.remove("hidden");

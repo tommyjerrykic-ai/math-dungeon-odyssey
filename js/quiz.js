@@ -76,7 +76,7 @@
       var labels = ["A", "B", "C", "D"];
       var chs = document.querySelectorAll("#choices .choice-btn");
       for (var i = 0; i < chs.length; i++) {
-        chs[i].textContent = labels[i] + ". " + (q.options[i] || "");
+        chs[i].innerHTML = GAME.MathText.toHTML(labels[i] + ". " + (q.options[i] || ""));
         chs[i].classList.remove("correct", "wrong");
         chs[i].disabled = false;
       }
@@ -179,8 +179,8 @@
       } else {
         ansText = "ABCD"[q.answer] + ". " + q.options[q.answer];
       }
-      var body = "正確答案：<b>" + ansText + "</b>";
-      if (q.explanation) body += "<br>💡 " + q.explanation;
+      var body = "正確答案：<b>" + GAME.MathText.toHTML(ansText) + "</b>";
+      if (q.explanation) body += "<br>💡 " + GAME.MathText.toHTML(q.explanation);
       GAME.UI.feedbackConfirm("✘ 答錯了", body, false, "確認後繼續", done);
     }
     function done() {
