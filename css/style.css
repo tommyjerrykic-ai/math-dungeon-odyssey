@@ -587,6 +587,7 @@ body.portrait #rotate-overlay { display:flex; }
 
 .menu-btn { --btn-edge:#f7dc83; --btn-glow:rgba(250,212,98,.34); font-size:31px; letter-spacing:4px; }
 .menu-btn:first-child { --btn-edge:#a4ffd0; --btn-glow:rgba(74,222,137,.56); }
+.menu-fullscreen { position:absolute; right:34px; top:28px; z-index:2; min-width:180px; padding:9px 18px; font-size:18px; letter-spacing:2px; color:#effcff; background:linear-gradient(180deg,rgba(47,98,145,.96),rgba(22,42,87,.96)); --btn-edge:#84e7ef; --btn-glow:rgba(85,225,240,.52); }
 
 .act-btn { --btn-edge:#78e8ed; --btn-glow:rgba(66,222,228,.38); letter-spacing:2px; }
 .act-btn::before { color:#fff09d; text-shadow:0 0 8px #f0b944; }
@@ -599,7 +600,6 @@ body.portrait #rotate-overlay { display:flex; }
 .skill-btn.test-kill { --btn-edge:#d3b0ff; --btn-glow:rgba(171,111,245,.50); }
 
 .choice-btn { --btn-edge:#d9d7ff; --btn-glow:rgba(150,146,255,.34); padding-left:18px; }
-.choice-btn::before { content:"◇"; color:#ffe27f; margin-right:12px; font-size:18px; }
 .choice-btn.correct { --btn-edge:#a5ffd0; --btn-glow:rgba(75,224,139,.55); }
 .choice-btn.wrong { --btn-edge:#ffabb1; --btn-glow:rgba(239,83,101,.48); }
 

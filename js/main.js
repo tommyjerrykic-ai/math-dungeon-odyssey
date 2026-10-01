@@ -110,6 +110,7 @@
   /* ── 菜單 ── */
   function bindMenu() {
     renderMapSelect();
+    bindFullscreen();
     $("btn-start").addEventListener("click", function () { GAME.Audio.sfx("confirm"); startRun(0); });
     $("btn-map-select").addEventListener("click", function () { GAME.Audio.sfx("click"); showScreen("map-select-screen"); });
     $("btn-map-select-back").addEventListener("click", function () { GAME.Audio.sfx("click"); showScreen("menu-screen"); });
@@ -133,6 +134,42 @@
       showScreen("menu-screen");
       S = GAME.state = "MENU";
     });
+  }
+
+  function bindFullscreen() {
+    var btn = $("btn-fullscreen");
+    var root = document.documentElement;
+    var request = root.requestFullscreen || root.webkitRequestFullscreen;
+    var exitFullscreen = document.exitFullscreen || document.webkitExitFullscreen;
+    function isFullscreen() { return !!(document.fullscreenElement || document.webkitFullscreenElement); }
+    function updateButton() {
+      var active = isFullscreen();
+      btn.textContent = active ? "⛶ 離開全螢幕" : "⛶ 全螢幕";
+      btn.setAttribute("aria-pressed", String(active));
+    }
+    if (!request || !exitFullscreen) {
+      btn.disabled = true;
+      btn.textContent = "瀏覽器不支援全螢幕";
+      return;
+    }
+    btn.addEventListener("click", function () {
+      var active = isFullscreen();
+      try {
+        var result = active ? exitFullscreen.call(document) : request.call(root);
+        if (result && result.catch) result.catch(function (err) {
+          console.warn("全螢幕切換失敗：", err);
+          btn.textContent = "無法切換全螢幕";
+          setTimeout(updateButton, 1800);
+        });
+      } catch (err) {
+        console.warn("全螢幕切換失敗：", err);
+        btn.textContent = "無法切換全螢幕";
+        setTimeout(updateButton, 1800);
+      }
+    });
+    document.addEventListener("fullscreenchange", updateButton);
+    document.addEventListener("webkitfullscreenchange", updateButton);
+    updateButton();
   }
 
   function showScreen(id) {
